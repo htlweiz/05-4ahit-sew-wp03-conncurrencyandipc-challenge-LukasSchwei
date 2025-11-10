@@ -38,6 +38,7 @@ class Program
         {
             p.Stop();
         }
+        consumer.Stop();
         Console.WriteLine($"Final Count: {queue.Count()}");
 
         // Alle Producer stoppen
