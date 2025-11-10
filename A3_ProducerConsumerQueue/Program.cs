@@ -19,6 +19,7 @@ class Program
             Producer p = new Producer(i, queue);
             producers.Add(p);
         }
+        Consumer consumer = new Consumer(queue);
 
 
         Console.WriteLine("Producer und Consumer gestartet...\n");
@@ -27,9 +28,11 @@ class Program
 
         // TODO
 
-        Thread checker = new Thread(() => CheckQueue(queue));
-        checker.Start();
-        checker.Join();
+        while (queue.Count() < 50)
+        {
+            Console.WriteLine($"Current queue Count: {queue.Count()}");
+            Thread.Sleep(1000);
+        }
 
         foreach (Producer p in producers)
         {
@@ -43,16 +46,5 @@ class Program
         // Consumer stoppen
 
 
-    }
-    
-    static void CheckQueue(ConcurrentQueue<int> queue)
-    {
-        while(true)
-        {
-            if (queue.Count() >= 50)
-            {
-                return;
-            }
-        }
     }
 }

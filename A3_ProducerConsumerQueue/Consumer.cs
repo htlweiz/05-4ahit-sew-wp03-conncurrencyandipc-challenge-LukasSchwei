@@ -11,20 +11,20 @@ public class Consumer
     private Thread? consumerThread;
     private int sum = 0;
 
-    public Consumer()
+    public Consumer(ConcurrentQueue<int> queue)
     {
         
         // Thread im Konstruktor starten
-        consumerThread = new Thread(ConsumeNumbers);
+        consumerThread = new Thread(() => ConsumeNumbers(queue));
         consumerThread.Start();
     }
 
-    private void ConsumeNumbers()
+    private void ConsumeNumbers(ConcurrentQueue<int> queue)
     {
         while (!shouldStop)
         {
-            // TODO
-            
+            int output = 0;
+            queue.TryDequeue(out output);            
             Thread.Sleep(250); // 250ms Takt
         }
     }
