@@ -33,16 +33,9 @@ class Program
     
     private static void PerformBankOperations(BankAccount account)
     {
-        object lockObject = new object();
-        lock (lockObject)
-        {
-            account.Deposit(100);
-        }
-        Thread.Sleep(500);
-        lock (lockObject)
-        {
-            account.Withdraw(150);
-        }
+        account.Deposit(100);
+        Thread.Sleep(100);
+        account.Withdraw(150);
     }
 }
 

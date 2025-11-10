@@ -5,21 +5,27 @@ namespace A2_RaceConditionBank;
 public class BankAccount
 {
     private int balance;
-   
+    private readonly object lockObject = new object();
     
     public BankAccount(int initial) 
     { 
         balance = initial; 
     }
     
-    public void Deposit(int amount) 
+    public void Deposit(int amount)
     {
-        balance += amount;
+        lock (lockObject)
+        {
+            balance += amount;
+        }
     }
     
-    public void Withdraw(int amount) 
+    public void Withdraw(int amount)
     {
-        balance -= amount;
+        lock(lockObject)
+        {
+            balance -= amount;
+        }
     }
     
     public int GetBalance() 
