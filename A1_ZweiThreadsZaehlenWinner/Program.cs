@@ -5,29 +5,44 @@ namespace A1_ZweiThreadsZaehlenWinner;
 
 class Program
 {
-   
-    
+
+    static int valueA = 0;
+    static int valueB = 0;
     public static void Main(string[] args)
     {
-        new Thread(CountUpThreadA).Start();
-        new Thread(CountDownThreadB).Start();
+        Thread thread1 = new Thread(() => CountUpThreadA());
+        Thread thread2 = new Thread(() => CountDownThreadB());
+        thread1.Start();
+        thread2.Start();
+        thread1.Join();
+        thread2.Join();
     }
-    
+
     private static void CountUpThreadA()
     {
         for (int i = 1; i <= 100; i++)
         {
-            Console.WriteLine($"Thread 1: {i}");
+            valueA = i;
             Thread.Sleep(100);
+            if (valueA == valueB)
+            {
+                Console.WriteLine(valueA + " " + valueB);
+                return;
+            }
         }
     }
-    
+
     private static void CountDownThreadB()
     {
-       for (int i = 100; i >= 1; i--)
+        for (int i = 100; i >= 1; i--)
         {
-            Console.WriteLine($"Thread 2: {i}");
+            valueB = i;
             Thread.Sleep(100);
+            if (valueA == valueB)
+            {
+                Console.WriteLine(valueA + " " + valueB);
+                return;
+            }
         }
     }
 }
