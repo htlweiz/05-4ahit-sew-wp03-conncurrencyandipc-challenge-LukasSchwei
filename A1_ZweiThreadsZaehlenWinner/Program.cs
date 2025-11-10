@@ -16,6 +16,13 @@ class Program
         thread2.Start();
         thread1.Join();
         thread2.Join();
+
+        if (valueA >= 50)
+            Console.WriteLine($"Win for Count up with {valueA}");
+        else if (valueA <= 50)
+            Console.WriteLine($"Win for Count down with {valueA}");
+        else
+            Console.WriteLine("Draw");
     }
 
     private static void CountUpThreadA()
