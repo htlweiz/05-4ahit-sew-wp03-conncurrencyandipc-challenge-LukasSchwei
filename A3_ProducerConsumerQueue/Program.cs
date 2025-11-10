@@ -12,12 +12,12 @@ class Program
         Console.WriteLine("Übung 3: Producer-Consumer");
         Console.WriteLine("==========================================\n");
 
-        Producer[] producers = new Producer[5];
+        List<Producer> producers = new List<Producer>();
         ConcurrentQueue<int> queue = new ConcurrentQueue<int>();
         for (int i = 0; i < 5; i++)
         {
             Producer p = new Producer(i, queue);
-            producers[i] = p;
+            producers.Add(p);
         }
 
 
@@ -27,7 +27,7 @@ class Program
 
         // TODO
 
-        Thread checker = new Thread(() => CheckQueue(queue, producers));
+        Thread checker = new Thread(() => CheckQueue(queue));
         checker.Start();
         checker.Join();
 
@@ -45,7 +45,7 @@ class Program
 
     }
     
-    static void CheckQueue(ConcurrentQueue<int> queue, Producer[] producers)
+    static void CheckQueue(ConcurrentQueue<int> queue)
     {
         while(true)
         {
